@@ -1,3 +1,5 @@
+//ainda não testado
+
 import java.util.Scanner;
 
 public class Calculadora {
