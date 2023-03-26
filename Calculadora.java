@@ -52,7 +52,7 @@ public class Calculadora {
                     || elementos[i + 1].equals("/")) {
                         if (tamanho == 2 && elementos[i].equals("-") || elementos[i].equals("+") || elementos[i].equals("*") || elementos[i].equals("/")) {
                             if (elementos[i].equals("/")) {
-                                if (tamanho != 1 && tamanho <= 3) {
+                                if (tamanho != 1) {
                                 segundoNum = pilha.pop();
                                 tamanho--;
                                 primeiroNum = pilha.pop();
@@ -64,7 +64,7 @@ public class Calculadora {
                                 }
                             } else {
                                 if (elementos[i].equals("+")) {
-                                    if (tamanho != 1 && tamanho <= 3) {
+                                    if (tamanho != 1) {
                                         segundoNum = pilha.pop();
                                         tamanho--;
                                         primeiroNum = pilha.pop();
@@ -76,7 +76,7 @@ public class Calculadora {
                                     }
                                 } else {
                                     if (elementos[i].equals("-")) {
-                                        if (tamanho != 1 && tamanho <= 3) {
+                                        if (tamanho != 1) {
                                             segundoNum = pilha.pop();
                                             tamanho--;
                                             primeiroNum = pilha.pop();
@@ -88,7 +88,7 @@ public class Calculadora {
                                         }
                                     } else {
                                         if (elementos[i].equals("*")) {
-                                            if (tamanho != 1 && tamanho <= 3) {
+                                            if (tamanho != 1) {
                                                 segundoNum = pilha.pop();
                                                 tamanho--;
                                                 primeiroNum = pilha.pop();
@@ -109,9 +109,12 @@ public class Calculadora {
                 }        
             i++;
         }
-
+        if (tamanho != 1) {
+            throw new IllegalArgumentException("Expressão não válida, ao final dos cálculos deve apenas restar 1 número, o resultado");
+        } else {
         System.out.println("Resultado: " + pilha.peek());
         teclado.close();
+        }
     }
 
 }
