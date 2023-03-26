@@ -1,130 +1,95 @@
 import java.util.Scanner;
 
-public class Calculadora implements Pilha {
-    private char[] info = new char[];
-    private char tipo;
-    private String expressao;
-    private int tamanho = 0;
-    private ListaEncadeada<char> pilhaencad = new ListaEncadeada<>();
-    private NoLista<char> primeiro;
-    public NoLista<char> ultimo;
-    private int qtdeElementos;
-
-
+public class Calculadora {
     public static void main(String[] args) {
-        Scanner leitor = new Scanner(System.in);
-        expressao = leitor.nextLine();
+        char tipo = 'a';
+        String expressao = " ";
+        System.out.println("Insira a expressao pos fixa");
+        Scanner teclado = new Scanner(System.in);
+        expressao = teclado.next() + teclado.nextLine();
+        while (tipo != 'e' && tipo != 'E' && tipo != 'd' && tipo != 'D') {
+            System.out.println("Digite 'E' para usar a pilha estática ou 'D' para a pilha dinâmica");
+            tipo = teclado.next().charAt(0);
 
-        boolean validar = true; //Essa variável é só pra quitar do switch
-
-        System.out.println("Selecione o tipo de Pilha que você quer usar. Selecione 1 para" +
-                "lista estática, 2 para lista encadeada e 3 para sair.");
-                tipo = leitor.nextLine();
-        switch (tipo) {
-            case 1: //Pilha Estática
-                String str = "[ ";
-                char c = null;
-                for (int i = 0; i <= expressao.lenght(); i++) { 
-                    c = expressao[i];
-                    str += c + " ]";
-                } 
-                int X = 0;
-                int Y = 0;
-                int Z = 0;
-                for (int i = 0; i <= expressao.lenght(); i++) {
-                    if (expressao.charAt(i) >= '0' && expressao.charAt(i) <= '9') {
-                    info.inserir(i);
-                    tamanho++;
-                }
-                        if (info.lenght() == 2) {
-                            X = info[tamanho - 1];
-                            info.pop();
-                            Y = info[tamanho - 1];
-                            info.pop();
-                        }
-                        if (X == 0 || Y == 0) {
-                            throw new RuntimeException("Não há operandos o suficiente para realizar a conta");
-                        } else {
-                        if (expressao[i] = '+') {
-                            Z = X + Y;
-                        } else if {
-                            if(expressao[i] = '-') {
-                                Z = X - Y;
-                            } else if {
-                                if (expressao[i] = '*') {
-                                    Z = X * Y;
-                                } else {
-                                    if (expressao[i] = '/') {
-                                        Z = X / Y;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                        Z.info.inserir();
-                }
-                System.out.println("Resultado Final = " + info);
-                validar = true;
-            break;
-
-            case 2: //Pilha Encadeada
-                String str = "[ ";
-                char c = null;
-                for (int i = 0; i <= expressao.lenght(); i++) { 
-                    c = expressao[i];
-                    str += c + " ]";
-                }
-                int X = 0;
-                int Y = 0;
-                int Z = 0;
-                char c = null;
-                for (int i = 0; i <= expressao.lenght(); i++) {
-                    c = expressao[i];
-                    NoLista<char> novo = new NoLista();
-                    novo.setInfo(c);
-                        if (this.EstaVazia()) {
-                            primeiro = novo;
-                        } else {
-                            ultimo.setProx(novo);
-                        }
-                        if (pilhaencad.lenght() == 2) {
-                            X = pilhaencad[qtdeElementos - 1];
-                            pilhaencad.retirar();
-                            Y = pilhaencad[qtdeElementos - 1];
-                            pilhaencad.retirar();
-                        }
-                        if (X == 0 || Y == 0) {
-                            throw new RuntimeException("Não há operandos o suficiente para realizar a conta");
-                        } else {
-                        if (expressao[i] = '+') {
-                            Z = X + Y;
-                        } else if {
-                            if(expressao[i] = '-') {
-                                Z = X - Y;
-                            } else if {
-                                if (expressao[i] = '*') {
-                                    Z = X * Y;
-                                } else {
-                                    if (expressao[i] = '/') {
-                                        Z = X / Y;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                System.out.println("Resultado Final = " + pilhaencad);        
-                validar = true;
-            break;
-
-            case 3: //Quit
-                System.out.println("Adeus");
-                validar = false;
-            break:
-
-            default:
-                validar = true;
-            break;
+            if (tipo != 'e' && tipo != 'E' && tipo != 'd' && tipo != 'D') {
+                System.out.println("Deve ser digitado 'E' ou 'D', tente novamente");
+            }
         }
-        leitor.close();
+
+        Pilha<Double> pilha;
+        switch(tipo) {
+            case 'e':
+             pilha = new PilhaVetor<>();
+            break;
+            case 'E':
+             pilha = new PilhaVetor<>();
+            break;
+            case 'd':
+             pilha = new PilhaLista<>();
+            break;
+            case 'D':
+            pilha = new PilhaLista<>();
+            break;
+            default:
+             pilha = new PilhaLista<>();
+        }
+
+        int i = 0;
+        Double primeiroNum = 0.0;
+        Double segundoNum = 0.0;
+
+        String[] elementos = expressao.split(" ");
+
+
+        while (i < elementos.length) {
+                if (!elementos[i].equals("-") && !elementos[i].equals("+") && !elementos[i].equals("*") &&  !elementos[i].equals("/")) {
+                    if (pilha.length() == 2 && elementos[i].getProx().isDigit) {
+                        segundoNum = pilha.pop();
+                        primeiroNum = pilha.pop();
+                        throw new RuntimeException("Expressão invalida, tente novamente");
+                    }
+
+                    if (pilha.length() == 1 && elementos[i].getProx().equals("-") || elementos[i].getProx().equals("+") || elementos[i].getProx().equals("*")
+                     || elementos[i].getProx().equals("/")) {
+                        primeiroNum = pilha.pop();
+                        throw new IllegalArgumentException("A expressão deve ser escrita na forma pós-fixa");
+                    }
+
+                    if (elementos[i].equals("-") || elementos[i].equals("+") || elementos[i].equals("*") || elementos[i].equals("/") 
+                    && elementos[i].getProx().equals("-") || elementos[i].getProx().equals("+") || elementos[i].getProx().equals("*") 
+                    || elementos[i].getProx().equals("/") ||) {
+                        if (pilha.length() == 2 && elementos[i].equals("-") || elementos[i].equals("+") || elementos[i].equals("*") || elementos[i].equals("/")) {
+                            if (elementos[i].equals("/")) {
+                                segundoNum = pilha.pop();
+                                primeiroNum = pilha.pop();
+                                pilha.push(primeiroNum / segundoNum);
+                            } else {
+                                if (elementos[i].equals("+")) {
+                                    segundoNum = pilha.pop();
+                                    primeiroNum = pilha.pop();
+                                    pilha.push(primeiroNum + segundoNum);
+                                } else {
+                                    if (elementos[i].equals("-")) {
+                                        segundoNum = pilha.pop();
+                                        primeiroNum = pilha.pop();
+                                        pilha.push(primeiroNum - segundoNum);
+                                    } else {
+                                        if (elementos[i].equals("*")) {
+                                            segundoNum = pilha.pop();
+                                            primeiroNum = pilha.pop();
+                                            pilha.push(primeiroNum * segundoNum);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    pilha.push(Double.valueOf(elementos[i]));       
+            i++;
+        }
+
+        System.out.println("Resultado: " + pilha.peek());
+        teclado.close();
     }
+
 }
