@@ -86,7 +86,32 @@ public class Calculadora {
                             }
                         }
                     }
-                    pilha.push(Double.valueOf(elementos[i]));       
+                    pilha.push(Double.valueOf(elementos[i])); 
+                } else {
+                    if (elementos[i].equals("/")) {
+                        segundoNum = pilha.pop();
+                        primeiroNum = pilha.pop();
+                        pilha.push(primeiroNum / segundoNum);
+                    } else {
+                        if (elementos[i].equals("+")) {
+                            segundoNum = pilha.pop();
+                            primeiroNum = pilha.pop();
+                            pilha.push(primeiroNum + segundoNum);
+                        } else {
+                            if (elementos[i].equals("-")) {
+                                segundoNum = pilha.pop();
+                                primeiroNum = pilha.pop();
+                                pilha.push(primeiroNum - segundoNum);
+                            } else {
+                                if (elementos[i].equals("*")) {
+                                    segundoNum = pilha.pop();
+                                    primeiroNum = pilha.pop();
+                                    pilha.push(primeiroNum * segundoNum);
+                                }
+                            }
+                        }
+                    }
+                }        
             i++;
         }
 
