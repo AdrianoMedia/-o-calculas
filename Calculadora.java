@@ -45,22 +45,11 @@ public class Calculadora {
 
         while (i < elementos.length) {
                 if (!elementos[i].equals("-") && !elementos[i].equals("+") && !elementos[i].equals("*") &&  !elementos[i].equals("/")) {
-                    if (pilha.length() == 2 && elementos[i].getProx().isDigit) {
-                        segundoNum = pilha.pop();
-                        primeiroNum = pilha.pop();
-                        throw new RuntimeException("Expressão invalida, tente novamente");
-                    }
-
-                    if (pilha.length() == 1 && elementos[i].getProx().equals("-") || elementos[i].getProx().equals("+") || elementos[i].getProx().equals("*")
-                     || elementos[i].getProx().equals("/")) {
-                        primeiroNum = pilha.pop();
-                        throw new IllegalArgumentException("A expressão deve ser escrita na forma pós-fixa");
-                    }
-
+                    
                     if (elementos[i].equals("-") || elementos[i].equals("+") || elementos[i].equals("*") || elementos[i].equals("/") 
-                    && elementos[i].getProx().equals("-") || elementos[i].getProx().equals("+") || elementos[i].getProx().equals("*") 
-                    || elementos[i].getProx().equals("/") ||) {
-                        if (pilha.length() == 2 && elementos[i].equals("-") || elementos[i].equals("+") || elementos[i].equals("*") || elementos[i].equals("/")) {
+                    && elementos[i + 1].equals("-") || elementos[i + 1].equals("+") || elementos[i + 1].equals("*") 
+                    || elementos[i + 1].equals("/")) {
+                        if (pilha.peek() == 2 && elementos[i].equals("-") || elementos[i].equals("+") || elementos[i].equals("*") || elementos[i].equals("/")) {
                             if (elementos[i].equals("/")) {
                                 segundoNum = pilha.pop();
                                 primeiroNum = pilha.pop();
