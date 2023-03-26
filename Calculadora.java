@@ -1,5 +1,3 @@
-//ainda não testado
-
 import java.util.Scanner;
 
 public class Calculadora {
@@ -48,9 +46,6 @@ public class Calculadora {
                 if (!elementos[i].equals("-") && !elementos[i].equals("+") && !elementos[i].equals("*") &&  !elementos[i].equals("/")) {
                     pilha.push(Double.valueOf(elementos[i])); 
                     tamanho++;
-                    if (tamanho >= 2 && tamanho <= 3 && elementos[i + 1].matches("[0-9]+")) {
-                        throw new IllegalArgumentException("Expressão deve ser seguida de dois números e um operador");
-                    }
                 } else {
                     if (elementos[i].equals("-") || elementos[i].equals("+") || elementos[i].equals("*") || elementos[i].equals("/") 
                     && elementos[i + 1].equals("-") || elementos[i + 1].equals("+") || elementos[i + 1].equals("*") 
