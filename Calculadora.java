@@ -6,6 +6,7 @@ public class Calculadora {
     public static void main(String[] args) {
         char tipo = 'a';
         String expressao = " ";
+        int tamanho = 0;
         System.out.println("Insira a expressao pos fixa");
         Scanner teclado = new Scanner(System.in);
         expressao = teclado.next() + teclado.nextLine();
@@ -45,60 +46,70 @@ public class Calculadora {
 
         while (i < elementos.length) {
                 if (!elementos[i].equals("-") && !elementos[i].equals("+") && !elementos[i].equals("*") &&  !elementos[i].equals("/")) {
-                    
+                    pilha.push(Double.valueOf(elementos[i])); 
+                    tamanho++;
+                    if (tamanho >= 2 && tamanho <= 3 && elementos[i + 1].matches("[0-9]+")) {
+                        throw new IllegalArgumentException("Expressão deve ser seguida de dois números e um operador");
+                    }
+                } else {
                     if (elementos[i].equals("-") || elementos[i].equals("+") || elementos[i].equals("*") || elementos[i].equals("/") 
                     && elementos[i + 1].equals("-") || elementos[i + 1].equals("+") || elementos[i + 1].equals("*") 
                     || elementos[i + 1].equals("/")) {
-                        if (pilha.peek() == 2 && elementos[i].equals("-") || elementos[i].equals("+") || elementos[i].equals("*") || elementos[i].equals("/")) {
+                        if (tamanho == 2 && elementos[i].equals("-") || elementos[i].equals("+") || elementos[i].equals("*") || elementos[i].equals("/")) {
                             if (elementos[i].equals("/")) {
+                                if (tamanho != 1 && tamanho <= 3) {
                                 segundoNum = pilha.pop();
+                                tamanho--;
                                 primeiroNum = pilha.pop();
+                                tamanho--;
                                 pilha.push(primeiroNum / segundoNum);
+                                tamanho++;
+                                } else {
+                                    throw new IllegalArgumentException("Expressão incorreta");
+                                }
                             } else {
                                 if (elementos[i].equals("+")) {
-                                    segundoNum = pilha.pop();
-                                    primeiroNum = pilha.pop();
+                                    if (tamanho != 1 && tamanho <= 3) {
+                                        segundoNum = pilha.pop();
+                                        tamanho--;
+                                        primeiroNum = pilha.pop();
+                                        tamanho--;
                                     pilha.push(primeiroNum + segundoNum);
+                                    tamanho++;
+                                    } else {
+                                        throw new IllegalArgumentException("Expressão incorreta");
+                                    }
                                 } else {
                                     if (elementos[i].equals("-")) {
-                                        segundoNum = pilha.pop();
-                                        primeiroNum = pilha.pop();
+                                        if (tamanho != 1 && tamanho <= 3) {
+                                            segundoNum = pilha.pop();
+                                            tamanho--;
+                                            primeiroNum = pilha.pop();
+                                            tamanho--;
                                         pilha.push(primeiroNum - segundoNum);
+                                        tamanho++;
+                                        } else {
+                                            throw new IllegalArgumentException("Expressão incorreta");
+                                        }
                                     } else {
                                         if (elementos[i].equals("*")) {
-                                            segundoNum = pilha.pop();
-                                            primeiroNum = pilha.pop();
+                                            if (tamanho != 1 && tamanho <= 3) {
+                                                segundoNum = pilha.pop();
+                                                tamanho--;
+                                                primeiroNum = pilha.pop();
+                                                tamanho--;
                                             pilha.push(primeiroNum * segundoNum);
+                                            tamanho++;
+                                            } else {
+                                                throw new IllegalArgumentException("Expressão incorreta");
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                    pilha.push(Double.valueOf(elementos[i])); 
-                } else {
-                    if (elementos[i].equals("/")) {
-                        segundoNum = pilha.pop();
-                        primeiroNum = pilha.pop();
-                        pilha.push(primeiroNum / segundoNum);
                     } else {
-                        if (elementos[i].equals("+")) {
-                            segundoNum = pilha.pop();
-                            primeiroNum = pilha.pop();
-                            pilha.push(primeiroNum + segundoNum);
-                        } else {
-                            if (elementos[i].equals("-")) {
-                                segundoNum = pilha.pop();
-                                primeiroNum = pilha.pop();
-                                pilha.push(primeiroNum - segundoNum);
-                            } else {
-                                if (elementos[i].equals("*")) {
-                                    segundoNum = pilha.pop();
-                                    primeiroNum = pilha.pop();
-                                    pilha.push(primeiroNum * segundoNum);
-                                }
-                            }
-                        }
+                        throw new IllegalArgumentException("Espressão invalida, deve haver 2 valores na pilha para realizar um calculo");
                     }
                 }        
             i++;
